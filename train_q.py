@@ -31,8 +31,7 @@ def get_state(obs):
 
     # Obstacles (if included in obs)
     obstacle_north, obstacle_south, obstacle_east, obstacle_west = obs[10:14]
-
-    # Distance metrics (Manhattan distance)
+    
     passenger_look = obs[14]
     destination_look = obs[15]
 
@@ -46,14 +45,19 @@ def get_state(obs):
 
 def reward_shaping(env, old_obs, new_obs):
     shaped_reward = 0
+    
     old_pick_dis = abs(old_obs[0] - env.passenger_loc[0]) + abs(old_obs[1] - env.passenger_loc[1])
     new_pick_dis = abs(new_obs[0] - env.passenger_loc[0]) + abs(new_obs[1] - env.passenger_loc[1])
+    
     if not env.passenger_picked_up and old_pick_dis <= new_pick_dis:    # not going toward the passenger
         shaped_reward -= 2
+        
     old_drop_dis = abs(old_obs[0] - env.destination[0]) + abs(old_obs[1] - env.destination[1])
     new_drop_dis = abs(new_obs[0] - env.destination[0]) + abs(new_obs[1] - env.destination[1])
+    
     if env.passenger_picked_up and old_pick_dis <= new_pick_dis:    # not going toward the passenger
         shaped_reward -= 2
+        
     return shaped_reward
 
 rewards_per_episode = []
@@ -73,7 +77,22 @@ for episode in range(EPISODES):
             else:
                 # Unknown state -> random action
                 action = random.randrange(action_size)
-
+                
+        taxi_row, taxi_col = env.taxi_pos
+        next_row, next_col = taxi_row, taxi_col
+        reward = 0
+        if action == 0 :  # Move Down
+            next_row += 1
+        elif action == 1:  # Move Up
+            next_row -= 1
+        elif action == 2:  # Move Right
+            next_col += 1
+        elif action == 3:  # Move Left
+            next_col -= 1
+        
+        while (taxi_row + next_row, taxi_col + next_col) in env.obstacles:
+            action = random.randrange(action_size)
+            
         next_obs, reward, done, _ = env.step(action)
         next_state = get_state(next_obs)
         
