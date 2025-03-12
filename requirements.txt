@@ -2,5 +2,3 @@ tqdm
 requests
 argparse
 torch
-numpy
-pickle-mixin
