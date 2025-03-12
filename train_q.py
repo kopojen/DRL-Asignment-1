@@ -9,7 +9,7 @@ DISCOUNT_FACTOR = 0.95
 EPSILON = 1.0
 MIN_EPSILON = 0.05
 DECAY_RATE = 0.999
-EPISODES = 10000
+EPISODES = 100
 
 env = SimpleTaxiEnv(grid_size=5, fuel_limit=5000)
 action_size = 6  # [Down, Up, Right, Left, Pickup, Dropoff]
