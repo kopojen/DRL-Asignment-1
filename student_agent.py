@@ -28,7 +28,7 @@ def get_action(obs):
     #       To prevent crashes, implement a fallback strategy for missing keys. 
     #       Otherwise, even if your agent performs well in training, it may fail during testing.
     state = get_state(obs)
-
+    
     # Fallback to random action if state is not in Q-table
     if state not in Q_table:
         return random.randrange(6)  # 6 possible actions
