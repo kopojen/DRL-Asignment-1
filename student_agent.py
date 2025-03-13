@@ -11,14 +11,8 @@ except FileNotFoundError:
     # Fallback to empty Q-table if file is not found
     Q_table = {}
 
-def get_state(obs):
-    """
-    Convert the observation into a simplified state representation
-    that matches how you trained your Q-table.
-    """
-    taxi_row, taxi_col = obs[0], obs[1]
-    passenger_look = obs[14]  # Example: If passenger is at taxi's location
-    return (taxi_row, taxi_col, passenger_look)
+def get_train_state(obs):
+    return (obs[0], obs[1], obs[2], obs[3], obs[4], obs[5], obs[6], obs[7], obs[8], obs[9], obs[10], obs[11], obs[12], obs[13], obs[14], obs[15])
 
 def get_action(obs):
     
@@ -27,7 +21,7 @@ def get_action(obs):
     # NOTE: Keep in mind that your Q-table may not cover all possible states in the testing environment.
     #       To prevent crashes, implement a fallback strategy for missing keys. 
     #       Otherwise, even if your agent performs well in training, it may fail during testing.
-    state = get_state(obs)
+    state = get_train_state(obs)
     
     # Fallback to random action if state is not in Q-table
     if state not in Q_table:
