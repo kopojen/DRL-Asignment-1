@@ -12,8 +12,7 @@ except FileNotFoundError:
     Q_table = {}
 
 def get_train_state(obs):
-    return obs[10], obs[11], obs[12], obs[13]
-    # return (obs[0], obs[1], obs[2], obs[3], obs[4], obs[5], obs[6], obs[7], obs[8], obs[9], obs[10], obs[11], obs[12], obs[13], obs[14], obs[15])
+    return (obs[0], obs[1], obs[2], obs[3], obs[4], obs[5], obs[6], obs[7], obs[8], obs[9], obs[10], obs[11], obs[12], obs[13], obs[14], obs[15])
 
 def get_action(obs):
     
